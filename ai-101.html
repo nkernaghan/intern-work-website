@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI 101 Course Guide — Haven256</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Garamond:ital,wght@0,400;0,700&family=Calibri:ital,wght@0,400;0,700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --gold: #C9A227;
+            --dark-navy: rgba(13, 21, 38, 0.92);
+            --navy: rgba(27, 42, 74, 0.8);
+            --cream: rgba(240, 235, 224, 0.95);
+            --cream-light: rgba(240, 235, 224, 0.7);
+            --cream-subtle: rgba(240, 235, 224, 0.5);
+            --serif: 'Garamond', serif;
+            --sans: 'Calibri', 'Segoe UI', sans-serif;
+        }
+
+        body {
+            font-family: var(--sans);
+            color: var(--cream);
+            background: var(--dark-navy);
+            line-height: 1.7;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid var(--gold);
+        }
+
+        .brand {
+            font-family: var(--serif);
+            font-size: 1.2rem;
+            color: var(--gold);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            letter-spacing: 1px;
+        }
+
+        h1 {
+            font-family: var(--serif);
+            font-size: 2.8rem;
+            color: var(--cream);
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            font-size: 0.95rem;
+            color: var(--cream-light);
+            font-style: italic;
+        }
+
+        .classification {
+            background: var(--navy);
+            padding: 0.8rem 1rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--cream-light);
+            border-left: 3px solid var(--gold);
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 2rem;
+            color: var(--gold);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: var(--cream);
+        }
+
+        .intro {
+            background: var(--navy);
+            padding: 1.5rem;
+            border-left: 4px solid var(--gold);
+            margin-bottom: 2rem;
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: var(--cream);
+        }
+
+        section {
+            margin: 2.5rem 0;
+        }
+
+        h2 {
+            font-family: var(--serif);
+            font-size: 1.6rem;
+            color: var(--gold);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px solid rgba(201, 162, 39, 0.2);
+            font-weight: 700;
+        }
+
+        h3 {
+            font-family: var(--serif);
+            font-size: 1.2rem;
+            color: var(--cream);
+            margin: 1.5rem 0 0.8rem 0;
+            font-weight: 700;
+        }
+
+        .course-item {
+            background: var(--navy);
+            padding: 1.2rem;
+            margin-bottom: 1rem;
+            border-left: 3px solid var(--gold);
+            border-radius: 2px;
+        }
+
+        .course-item h4 {
+            font-family: var(--serif);
+            font-size: 1.05rem;
+            color: var(--cream);
+            margin-bottom: 0.4rem;
+            font-weight: 700;
+        }
+
+        .course-item p {
+            color: var(--cream-light);
+            font-size: 0.95rem;
+            margin: 0;
+        }
+
+        .day {
+            background: var(--navy);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid var(--gold);
+            border-radius: 2px;
+        }
+
+        .day h4 {
+            font-family: var(--serif);
+            color: var(--gold);
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .day p {
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        .lab {
+            background: var(--navy);
+            border: 1px solid rgba(201, 162, 39, 0.2);
+            padding: 1.2rem;
+            margin-bottom: 1rem;
+            border-left: 3px solid var(--gold);
+        }
+
+        .lab h4 {
+            font-family: var(--serif);
+            color: var(--cream);
+            font-size: 1rem;
+            margin-bottom: 0.4rem;
+            font-weight: 700;
+        }
+
+        .lab p {
+            color: var(--cream-light);
+            font-size: 0.95rem;
+            margin: 0;
+        }
+
+        .knowledge-check {
+            background: var(--navy);
+            padding: 2rem;
+            border-left: 4px solid var(--gold);
+            margin: 2rem 0;
+        }
+
+        .knowledge-check h3 {
+            margin-top: 0;
+        }
+
+        .knowledge-check ol {
+            margin-left: 1.8rem;
+            margin-top: 1rem;
+        }
+
+        .knowledge-check li {
+            margin-bottom: 0.8rem;
+            line-height: 1.6;
+        }
+
+        ul {
+            margin-left: 1.5rem;
+            margin-top: 0.8rem;
+            margin-bottom: 1rem;
+        }
+
+        li {
+            margin-bottom: 0.6rem;
+            line-height: 1.6;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        strong {
+            color: var(--cream);
+            font-weight: 700;
+        }
+
+        .note {
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        a {
+            color: var(--gold);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            border-bottom: 1px solid var(--gold);
+        }
+
+        a:hover {
+            color: var(--cream);
+            border-bottom-color: var(--cream);
+        }
+
+        .course-item a {
+            border-bottom: 1px solid var(--gold);
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(201, 162, 39, 0.2);
+            color: var(--cream-light);
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 2rem 1rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← Back to Index</a>
+
+        <header>
+            <div class="brand">Haven256</div>
+            <h1>AI 101 & Pre-Program Course Guide</h1>
+            <p class="subtitle">Summer 2026 Intern Program</p>
+        </header>
+
+        <div class="classification">
+            Classification: Intern Use Only · Summer 2026
+        </div>
+
+        <div class="intro">
+            <p><strong>Complete the prerequisites below before your start date.</strong> The links are clickable — work through at your own pace. Subject to change before start date.</p>
+        </div>
+
+        <section>
+            <h2>01. Blockchain & Crypto Forensics</h2>
+            <div class="course-item">
+                <h4><a href="https://bitcoin.org/" target="_blank">How Bitcoin Works</a></h4>
+            </div>
+            <div class="course-item">
+                <h4><a href="https://ethereum.org/" target="_blank">What is blockchain?</a></h4>
+            </div>
+            <div class="course-item">
+                <h4>Key Concepts</h4>
+                <p>Wallet addresses, transaction hashes, UTXO vs. account models, mixers, cross-chain bridges, peel chains.</p>
+            </div>
+        </section>
+
+        <section>
+            <h2>02. Python & Blockchain APIs</h2>
+            <div class="course-item">
+                <h4><a href="https://fastapi.tiangolo.com/" target="_blank">FastAPI Official Tutorial</a></h4>
+            </div>
+            <div class="course-item">
+                <h4><a href="https://docs.helius.xyz/" target="_blank">Helius API Documentation</a></h4>
+            </div>
+            <div class="course-item">
+                <h4><a href="https://www.alchemy.com/docs" target="_blank">Alchemy Documentation</a></h4>
+            </div>
+        </section>
+
+        <section>
+            <h2>03. AI, LLMs & Retrieval-Augmented Generation</h2>
+            <div class="course-item">
+                <h4><a href="https://docs.anthropic.com/" target="_blank">Introduction to Claude</a></h4>
+            </div>
+            <div class="course-item">
+                <h4><a href="https://docs.anthropic.com/en/docs/build-a-prototype/prompt-engineering" target="_blank">Prompt Engineering Guide — Anthropic</a></h4>
+            </div>
+            <div class="course-item">
+                <h4><a href="https://www.anthropic.com/learn" target="_blank">Anthropic Learning Center</a></h4>
+            </div>
+            <div class="course-item">
+                <h4>What is RAG?</h4>
+                <p><strong>What you need to know:</strong> Tokens, context windows, how LLMs generate text, what RAG is and why it matters for working with internal data.</p>
+            </div>
+        </section>
+
+
+        <section>
+            <div class="knowledge-check">
+                <h3>04. Knowledge Check — End of Week 1</h3>
+                <p><em>Complete these by the end of Week 1. There are no trick questions — we are looking for clarity of thinking and your own words, not memorized definitions.</em></p>
+                <ol>
+                    <li>What is a token in the context of an LLM, and why does context window size matter?</li>
+                    <li>What is the difference between an LLM and an AI agent?</li>
+                    <li>Explain RAG in one paragraph. Why is it useful for working with internal company data?</li>
+                    <li>What is a blockchain and why is every transaction traceable?</li>
+                    <li>What is a crypto mixer and why does it complicate forensic investigations?</li>
+                    <li>What is a cross-chain bridge and why do investigators need to track them?</li>
+                    <li>You are given a suspicious wallet address. Walk through the steps you would take to investigate it using both blockchain data and AI tools.</li>
+                    <li>What makes a good AI prompt? Write a prompt you would use to summarize a suspicious transaction for a law enforcement report.</li>
+                    <li>What is one thing you learned this week that surprised you or changed how you think about AI or crypto?</li>
+                </ol>
+            </div>
+        </section>
+
+        <footer>
+            <strong>Haven256</strong> · AI 101 & Pre-Program Course Guide · Summer 2026 · Confidential · Internal Use Only
+        </footer>
+    </div>
+</body>
+</html>
