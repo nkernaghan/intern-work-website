@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Haven256 Intern Program — Summer 2026</title>
+    <title>Intern Quiz — Haven256</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Garamond:ital,wght@0,400;0,700&family=Calibri:ital,wght@0,400;0,700&display=swap" rel="stylesheet">
@@ -84,15 +84,15 @@
             width: 100%;
         }
 
-        /* Landing Section */
-        .hero {
-            padding: 4rem 2rem;
+        /* Header */
+        .header {
+            padding: 3rem 2rem;
             background: linear-gradient(135deg, var(--dark-navy) 0%, var(--navy) 100%);
             text-align: center;
             border-bottom: 2px solid var(--gold);
         }
 
-        .hero-brand {
+        .header-brand {
             font-family: var(--serif);
             font-size: 1.2rem;
             color: var(--gold);
@@ -101,76 +101,56 @@
             letter-spacing: 1px;
         }
 
-        .hero h1 {
+        .header h1 {
             font-family: var(--serif);
-            font-size: 3.5rem;
+            font-size: 2.5rem;
             color: var(--cream);
-            margin-bottom: 1rem;
+            margin-bottom: 0.5rem;
             font-weight: 700;
             line-height: 1.1;
         }
 
-        .hero p {
-            font-size: 1.1rem;
+        .header p {
+            font-size: 1rem;
             color: var(--cream-light);
-            margin-bottom: 2rem;
             font-style: italic;
         }
 
-        .doc-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            max-width: 1200px;
+        /* Content Container */
+        .content {
+            max-width: 1000px;
             margin: 0 auto;
             padding: 3rem 2rem;
         }
 
-        .doc-card {
+        /* Google Form Container */
+        .form-container {
             background: var(--navy);
             border: 1px solid rgba(201, 162, 39, 0.2);
-            padding: 2rem;
             border-radius: 4px;
-            transition: all 0.3s ease;
-            cursor: pointer;
+            overflow: hidden;
             box-shadow: 0 2px 12px rgba(0,0,0,0.3);
-            text-decoration: none;
-            color: inherit;
-            display: flex;
-            flex-direction: column;
         }
 
-        .doc-card:hover {
-            box-shadow: 0 8px 24px rgba(201, 162, 39, 0.25);
-            border-color: var(--gold);
-            transform: translateY(-4px);
+        iframe {
+            width: 100%;
+            height: 800px;
+            border: none;
+            display: block;
         }
 
-        .doc-card h3 {
-            font-family: var(--serif);
-            font-size: 1.5rem;
-            color: var(--cream);
-            margin-bottom: 0.5rem;
-            border-bottom: 2px solid var(--gold);
-            padding-bottom: 0.75rem;
-        }
-
-        .doc-card p {
-            color: var(--cream-light);
-            font-size: 0.95rem;
-            margin-bottom: 1rem;
-            flex-grow: 1;
-        }
-
-        .doc-card .badge {
+        /* Back Link */
+        .back-link {
             display: inline-block;
-            background: rgba(201, 162, 39, 0.15);
+            margin-bottom: 2rem;
             color: var(--gold);
-            padding: 0.4rem 0.8rem;
-            border-radius: 2px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            width: fit-content;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: var(--cream);
         }
 
         footer {
@@ -187,7 +167,7 @@
             color: var(--cream);
         }
 
-        /* Animations */
+        /* Animation */
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -199,68 +179,33 @@
             }
         }
 
-        .hero {
+        .content {
             animation: fadeInUp 0.6s ease;
         }
-
-        .doc-card {
-            animation: fadeInUp 0.6s ease both;
-        }
-
-        .doc-card:nth-child(1) { animation-delay: 0.1s; }
-        .doc-card:nth-child(2) { animation-delay: 0.2s; }
-        .doc-card:nth-child(3) { animation-delay: 0.3s; }
-        .doc-card:nth-child(4) { animation-delay: 0.4s; }
-        .doc-card:nth-child(5) { animation-delay: 0.5s; }
     </style>
 </head>
 <body>
     <nav>
         <ul>
-            <li><a href="#cost-analysis">Cost Analysis</a></li>
-            <li><a href="#intern-jd">Intern JD</a></li>
-            <li><a href="#finance-jd">Finance JD</a></li>
-            <li><a href="#ai-101">AI 101</a></li>
-            <li><a href="#quiz">Intern Quiz</a></li>
+            <li><a href="index.html#cost-analysis">Cost Analysis</a></li>
+            <li><a href="index.html#intern-jd">Intern JD</a></li>
+            <li><a href="index.html#finance-jd">Finance JD</a></li>
+            <li><a href="index.html#ai-101">AI 101</a></li>
+            <li><a href="index.html#quiz">Intern Quiz</a></li>
         </ul>
     </nav>
 
-    <div class="hero">
-        <div class="hero-brand">Haven256</div>
-        <h1>Intern Program Summer 2026</h1>
-        <p>Professional documentation for the Haven256 internship initiative</p>
+    <div class="header">
+        <div class="header-brand">Haven256</div>
+        <h1>Intern Assessment Quiz</h1>
+        <p>Evaluate your understanding of the internship program and AI fundamentals</p>
     </div>
 
-    <div class="doc-grid">
-        <a href="cost-analysis.html" class="doc-card" id="cost-analysis">
-            <h3>Cost Analysis</h3>
-            <p>Comprehensive financial breakdown of the intern program, including seat costs, blended costs, technology infrastructure, and program ROI projections.</p>
-            <span class="badge">Financial</span>
-        </a>
-
-        <a href="intern-jd.html" class="doc-card" id="intern-jd">
-            <h3>Intern Job Descriptions</h3>
-            <p>Detailed job descriptions for Software & AI Engineering and Finance & Marketing internship roles with deliverables and requirements.</p>
-            <span class="badge">Recruiting</span>
-        </a>
-
-        <a href="finance-jd.html" class="doc-card" id="finance-jd">
-            <h3>Finance Intern JD</h3>
-            <p>Specialized job description for the Finance Internship role, focusing on financial modeling, market research, and strategic analysis.</p>
-            <span class="badge">Finance</span>
-        </a>
-
-        <a href="ai-101.html" class="doc-card" id="ai-101">
-            <h3>AI 101 Course Guide</h3>
-            <p>Pre-internship prerequisites and comprehensive Week 1 curriculum covering LLMs, embeddings, RAG, APIs, and AI agents.</p>
-            <span class="badge">Training</span>
-        </a>
-
-        <a href="quiz.html" class="doc-card" id="quiz">
-            <h3>Intern Quiz</h3>
-            <p>Assessment quiz to evaluate your understanding of the Haven256 intern program, roles, and AI fundamentals covered in the course guide.</p>
-            <span class="badge">Assessment</span>
-        </a>
+    <div class="content">
+        <a href="index.html" class="back-link">← Back to Program Overview</a>
+        <div class="form-container">
+            <iframe src="https://docs.google.com/forms/d/1XmjnfaLNuHSBvIVjh9f_lUyapVb-AyAChO9YWfNCC6o/viewform?embedded=true" allowfullscreen="" loading="lazy"></iframe>
+        </div>
     </div>
 
     <footer>
