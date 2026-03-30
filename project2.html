@@ -352,7 +352,7 @@
             </div>
 
             <h3>Team</h3>
-            <p>3 interns: Intern A (data &amp; back-end), Intern B (AI &amp; analysis), Intern C (dashboard &amp; user experience)</p>
+            <p>2-3 interns</p>
 
             <h3>Duration</h3>
             <p>12 weeks. First two weeks dedicated to learning. Building begins Week 3. Core product expected largely done by Weeks 10–11, with Week 12 for finishing touches and handoff.</p>
@@ -500,34 +500,28 @@
                     <thead>
                         <tr>
                             <th>Module</th>
-                            <th>Secondary</th>
                             <th>How It Connects</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td>M1 — Internal Knowledge Base</td>
-                            <td>All (users)</td>
                             <td>Foundation for all other tools</td>
                         </tr>
                         <tr>
                             <td>M2 — Contract &amp; BD Intelligence</td>
-                            <td>Intern A (data)</td>
                             <td>Sends opportunities to Proposal Writer</td>
                         </tr>
                         <tr>
                             <td>M3 — AI Proposal Writer</td>
-                            <td>Intern B (knowledge)</td>
                             <td>Pulls from M1; triggered by M2</td>
                         </tr>
                         <tr>
                             <td>M4 — Competitive Intelligence Engine</td>
-                            <td>Intern C (storage)</td>
                             <td>Briefings searchable via M1</td>
                         </tr>
                         <tr>
                             <td>M5 — Regulatory Early Warning</td>
-                            <td>All</td>
                             <td>Alert panel in main dashboard</td>
                         </tr>
                     </tbody>
@@ -773,158 +767,6 @@
                 <li>Usage log confirmed</li>
                 <li>Estimated monthly cost documented</li>
             </ul>
-        </section>
-
-        <!-- Section 7: Risk Register & Guardrails -->
-        <section>
-            <h2>Section 7 — Risk Register &amp; Guardrails</h2>
-
-            <div class="table-wrap">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Risk</th>
-                            <th>Severity</th>
-                            <th>Mitigation</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Interns take longer to get up to speed</td>
-                            <td>High</td>
-                            <td>Learning phase built in; first build milestone can flex</td>
-                        </tr>
-                        <tr>
-                            <td>AI answers are wrong or unreliable</td>
-                            <td>High</td>
-                            <td>Validate quality early; require source citations; set accuracy threshold</td>
-                        </tr>
-                        <tr>
-                            <td>Too many modules started, none finished</td>
-                            <td>High</td>
-                            <td>Finish fewer things well; Regulatory can be cut first; KB, Contract BD, Proposal Writer are core</td>
-                        </tr>
-                        <tr>
-                            <td>Government contract data feeds go down</td>
-                            <td>Medium</td>
-                            <td>Cache locally; use saved data for testing; don't rely on live feeds during demos</td>
-                        </tr>
-                        <tr>
-                            <td>Proposal Writer drafts too poor to be useful</td>
-                            <td>Medium</td>
-                            <td>Test with real employee in Week 8; if less than half usable, change approach</td>
-                        </tr>
-                        <tr>
-                            <td>Tools don't connect during integration</td>
-                            <td>Medium</td>
-                            <td>Start thinking about connections in Week 7, not Week 10</td>
-                        </tr>
-                        <tr>
-                            <td>An intern leaves early</td>
-                            <td>Low-Med</td>
-                            <td>All work in shared repo from Day 1; primary and backup owner for each module</td>
-                        </tr>
-                        <tr>
-                            <td>AI costs exceed budget</td>
-                            <td>Low</td>
-                            <td>Use smallest AI model for routine tasks; reserve powerful model for proposal drafting; monitor weekly</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="cut-order">
-                <h3>Cut Order</h3>
-                <ul>
-                    <li><strong>Cut first:</strong> Regulatory Early Warning</li>
-                    <li><strong>Cut second:</strong> Competitive Intel advanced features — keep weekly briefing</li>
-                    <li><strong>Cut third:</strong> Historical contract data — keep live daily feed</li>
-                    <li><strong>Never cut:</strong> Knowledge Base</li>
-                    <li><strong>Never cut:</strong> Contract BD live feed</li>
-                    <li><strong>Never cut:</strong> Handoff package</li>
-                </ul>
-            </div>
-        </section>
-
-        <!-- Section 8: How the Platform Works -->
-        <section>
-            <h2>Section 8 — How the Platform Works — Plain English</h2>
-
-            <div class="about">
-                <p>"One platform. One login. One place to find everything."</p>
-            </div>
-
-            <h3>How Data Gets In</h3>
-            <ul>
-                <li>Government contract portals checked daily</li>
-                <li>Competitor news, job postings, and data collected weekly</li>
-                <li>Regulatory sources scanned daily</li>
-                <li>Staff upload documents through dashboard anytime</li>
-                <li>All on a timer — no manual triggers</li>
-            </ul>
-
-            <h3>How Information Is Stored</h3>
-            <ul>
-                <li>One central database for everything</li>
-                <li>Documents broken into searchable sections</li>
-                <li>Nothing on individual laptops — shared environment</li>
-            </ul>
-
-            <h3>How the AI Answers Questions</h3>
-            <ul>
-                <li>Finds most relevant document sections</li>
-                <li>AI language model writes plain-English answer</li>
-                <li>Every answer cites source document and section</li>
-                <li>Same approach powers Proposal Writer</li>
-            </ul>
-
-            <h3>The Dashboard</h3>
-            <p>All five tools from single web page — one URL, one login. No installation for staff — runs in any browser.</p>
-
-            <h3>Login &amp; Access Control</h3>
-            <ul>
-                <li>Username and password required</li>
-                <li>Every action logged with user name and timestamp</li>
-                <li>Access log viewable by admins</li>
-            </ul>
-
-            <h3>Platform Summary</h3>
-            <div class="table-wrap">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Component</th>
-                            <th>Description</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Five tools</td>
-                            <td>Knowledge Base, Contract BD, Proposal Writer, Competitive Intel, Regulatory Alerts</td>
-                        </tr>
-                        <tr>
-                            <td>One dashboard</td>
-                            <td>Single login, browser-based, no installation</td>
-                        </tr>
-                        <tr>
-                            <td>Automated data</td>
-                            <td>Government contracts daily · Competitor data weekly · Regulatory alerts daily</td>
-                        </tr>
-                        <tr>
-                            <td>AI engine</td>
-                            <td>OpenAI or Anthropic language models for answers and drafting</td>
-                        </tr>
-                        <tr>
-                            <td>Access control</td>
-                            <td>Username + password · Usage logging on every action</td>
-                        </tr>
-                        <tr>
-                            <td>Handoff ready</td>
-                            <td>Setup guide, video walkthroughs, known issues, and backlog included</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
         </section>
 
         <footer>

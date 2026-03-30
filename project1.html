@@ -481,7 +481,6 @@
             <h2>Part B — The Six Modules</h2>
 
             <div class="module-card">
-                <div class="role-tag">Intern A</div>
                 <h3>M1 — Blockchain Data Collection</h3>
                 <p>Foundation everything else depends on. Pulls raw transaction data from Bitcoin, Ethereum, Tron, and Solana. All data stored locally so the platform keeps working even if a data source goes down. Collection runs on schedule — no manual triggering.</p>
                 <div class="dod-label">Definition of Done</div>
@@ -497,7 +496,6 @@
             </div>
 
             <div class="module-card">
-                <div class="role-tag">Intern B</div>
                 <h3>M2 — Mixer Analysis Engine</h3>
                 <p>Detects patterns revealing which transactions passed through the same mixing round — similar timing, similar output amounts, address behavior relative to one another. Every finding labeled with a confidence score — nothing presented as definitive.</p>
                 <div class="dod-label">Definition of Done</div>
@@ -513,7 +511,6 @@
             </div>
 
             <div class="module-card">
-                <div class="role-tag">Intern A</div>
                 <h3>M3 — Cross-Chain Tracer</h3>
                 <p>Follows money across blockchains through bridges and exchanges. Maintains a list of known transfer points. Links the sending wallet on one network to the receiving wallet on another.</p>
                 <div class="dod-label">Definition of Done</div>
@@ -529,7 +526,6 @@
             </div>
 
             <div class="module-card">
-                <div class="role-tag">Intern B</div>
                 <h3>M4 — Wallet Relationship Map</h3>
                 <p>Stores every wallet and transaction as a connected network. Known entities labeled — exchanges, mixers, criminal groups. Analysts can query: "show me everything connected to this wallet within 3 steps."</p>
                 <div class="dod-label">Definition of Done</div>
@@ -545,7 +541,6 @@
             </div>
 
             <div class="module-card">
-                <div class="role-tag">Intern C</div>
                 <h3>M5 — Nation-State Pattern Flagging</h3>
                 <p>Loads known behavioral signatures from public reports (Lazarus Group, etc.). Every wallet cluster receives a 0–100 likelihood score. Scores above 70 trigger a dashboard alert. Every score comes with a plain-English explanation.</p>
                 <div class="dod-label">Definition of Done</div>
@@ -561,7 +556,6 @@
             </div>
 
             <div class="module-card">
-                <div class="role-tag">Intern C</div>
                 <h3>M6 — Investigation Dashboard</h3>
                 <p>The interface analysts actually use, runs in any browser. Enter a wallet address and get a complete forward and backward money trail. High-scoring wallets surface in the alert queue. One-click PDF case report export.</p>
                 <div class="dod-label">Definition of Done</div>
@@ -752,68 +746,6 @@
                 <li>Estimated monthly cost documented</li>
             </ul>
 
-            <h3>Risk Register</h3>
-            <div class="table-wrap">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Risk</th>
-                            <th>Severity</th>
-                            <th>Mitigation</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Interns take longer to ramp</td>
-                            <td><span class="sev-high">High</span></td>
-                            <td>Learning phase built in; first build milestone can flex</td>
-                        </tr>
-                        <tr>
-                            <td>Blockchain data sources hit rate limits</td>
-                            <td><span class="sev-high">High</span></td>
-                            <td>Save all data locally; use saved data for testing; never rely on live sources during demos</td>
-                        </tr>
-                        <tr>
-                            <td>Mixer analysis produces too many false positives</td>
-                            <td><span class="sev-high">High</span></td>
-                            <td>Calibrate against known public cases; set minimum confidence threshold</td>
-                        </tr>
-                        <tr>
-                            <td>Cross-chain transfer points change</td>
-                            <td><span class="sev-medium">Medium</span></td>
-                            <td>Keep list in easy-to-update config file; check monthly</td>
-                        </tr>
-                        <tr>
-                            <td>Nation-state flagging creates legal sensitivity</td>
-                            <td><span class="sev-medium">Medium</span></td>
-                            <td>Every score labeled probabilistic; disclaimer on exports; analyst review required</td>
-                        </tr>
-                        <tr>
-                            <td>Data provider changes pricing</td>
-                            <td><span class="sev-low">Low</span></td>
-                            <td>Identify backup provider for each network before Week 4</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <h3>Cut Order if Behind Schedule</h3>
-            <ol class="cut-list">
-                <li>Cut first: Nation-State Pattern Flagging</li>
-                <li>Cut second: Advanced graph visualization — keep basic table view</li>
-                <li>Cut third: Tron and Solana — deliver Bitcoin and Ethereum first</li>
-                <li class="never-cut">Never cut: Blockchain data collection</li>
-                <li class="never-cut">Never cut: Mixer analysis</li>
-                <li class="never-cut">Never cut: Cross-chain tracing</li>
-            </ol>
-
-            <h3>Out of Scope</h3>
-            <ul>
-                <li>Custom ML model trained from scratch</li>
-                <li>Real-time live blockchain monitoring</li>
-                <li>Full identity resolution</li>
-                <li>Automated legal reporting or court submissions</li>
-            </ul>
         </section>
 
         <footer>
