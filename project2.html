@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project #2 — Haven256 Internal AI Operating System</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --gold: #C9A227;
+            --dark-navy: rgba(13, 21, 38, 0.92);
+            --navy: rgba(27, 42, 74, 0.8);
+            --cream: rgba(240, 235, 224, 0.95);
+            --cream-light: rgba(240, 235, 224, 0.7);
+            --cream-subtle: rgba(240, 235, 224, 0.5);
+            --serif: 'EB Garamond', 'Garamond', serif;
+            --sans: 'Calibri', 'Segoe UI', sans-serif;
+        }
+
+        body {
+            font-family: var(--sans);
+            color: var(--cream);
+            background: var(--dark-navy);
+            line-height: 1.7;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid var(--gold);
+        }
+
+        .brand {
+            font-family: var(--serif);
+            font-size: 1.2rem;
+            color: var(--gold);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            letter-spacing: 1px;
+        }
+
+        h1 {
+            font-family: var(--serif);
+            font-size: 2.8rem;
+            color: var(--cream);
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            font-size: 0.95rem;
+            color: var(--cream-light);
+            font-style: italic;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 2rem;
+            color: var(--gold);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: var(--cream);
+        }
+
+        .about {
+            background: var(--navy);
+            padding: 1.5rem;
+            border-left: 4px solid var(--gold);
+            margin-bottom: 2rem;
+            border-radius: 2px;
+        }
+
+        .about h3 {
+            margin-top: 0;
+        }
+
+        section {
+            margin: 2rem 0;
+        }
+
+        h2 {
+            font-family: var(--serif);
+            font-size: 1.6rem;
+            color: var(--gold);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px solid rgba(201, 162, 39, 0.2);
+            font-weight: 700;
+        }
+
+        h3 {
+            font-family: var(--serif);
+            font-size: 1.2rem;
+            color: var(--cream);
+            margin: 1.5rem 0 0.8rem 0;
+            font-weight: 700;
+        }
+
+        h4 {
+            font-family: var(--serif);
+            font-size: 1.1rem;
+            color: var(--cream);
+            margin: 1.2rem 0 0.6rem 0;
+            font-weight: 700;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        ul {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        li {
+            margin-bottom: 0.6rem;
+            line-height: 1.6;
+        }
+
+        strong {
+            color: var(--cream);
+            font-weight: 700;
+        }
+
+        /* Tables */
+        .table-wrap {
+            width: 100%;
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+        }
+
+        thead th {
+            background: rgba(27, 42, 74, 0.95);
+            color: var(--gold);
+            padding: 1rem;
+            text-align: left;
+            font-family: var(--serif);
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            border-bottom: 2px solid var(--gold);
+        }
+
+        tbody td {
+            padding: 0.8rem 1rem;
+            border-bottom: 1px solid rgba(201, 162, 39, 0.15);
+            vertical-align: top;
+            color: var(--cream);
+        }
+
+        tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        tbody tr:hover td {
+            background: rgba(27, 42, 74, 0.4);
+        }
+
+        /* Checklists */
+        .checklist {
+            list-style: none;
+            margin-left: 0;
+            margin-bottom: 1rem;
+        }
+
+        .checklist li {
+            padding: 0.45rem 0 0.45rem 2rem;
+            position: relative;
+            border-bottom: 1px solid rgba(201, 162, 39, 0.08);
+            line-height: 1.6;
+            margin-bottom: 0;
+        }
+
+        .checklist li:last-child {
+            border-bottom: none;
+        }
+
+        .checklist li::before {
+            content: '';
+            position: absolute;
+            left: 0.2rem;
+            top: 0.7rem;
+            width: 1rem;
+            height: 1rem;
+            border: 1.5px solid var(--gold);
+            border-radius: 2px;
+            background: transparent;
+        }
+
+        /* Phase blocks */
+        .phase-block {
+            background: var(--navy);
+            border-left: 4px solid var(--gold);
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 1.5rem;
+            border-radius: 2px;
+        }
+
+        .phase-block h3 {
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+            color: var(--gold);
+        }
+
+        .phase-meta {
+            font-size: 0.85rem;
+            color: var(--cream-light);
+            font-style: italic;
+            margin-bottom: 0.8rem;
+        }
+
+        .phase-block ul {
+            margin-bottom: 0;
+        }
+
+        /* Module definition blocks */
+        .mod-block {
+            background: rgba(27, 42, 74, 0.5);
+            border-left: 3px solid rgba(201, 162, 39, 0.4);
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 1.25rem;
+            border-radius: 2px;
+        }
+
+        .mod-block h3 {
+            margin-top: 0;
+            margin-bottom: 0.6rem;
+        }
+
+        .mod-block .checklist {
+            margin-bottom: 0.5rem;
+        }
+
+        .mod-block .acceptance {
+            font-size: 0.88rem;
+            color: var(--cream-light);
+            font-style: italic;
+            margin-top: 0.6rem;
+            margin-bottom: 0;
+        }
+
+        /* Demo blocks */
+        .demo-block {
+            background: var(--navy);
+            border-left: 4px solid var(--gold);
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 1.5rem;
+            border-radius: 2px;
+        }
+
+        .demo-block h3 {
+            margin-top: 0;
+            color: var(--gold);
+        }
+
+        /* Cut order box */
+        .cut-order {
+            background: rgba(27, 42, 74, 0.5);
+            border: 1px solid rgba(201, 162, 39, 0.25);
+            padding: 1.25rem 1.5rem;
+            border-radius: 2px;
+            margin-top: 1.5rem;
+        }
+
+        .cut-order h3 {
+            margin-top: 0;
+            color: var(--gold);
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .cut-order ul {
+            margin-bottom: 0;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(201, 162, 39, 0.2);
+            color: var(--cream-light);
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 2rem 1rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.2rem;
+            }
+
+            .table-wrap {
+                border: 1px solid rgba(201, 162, 39, 0.15);
+                border-radius: 2px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← Back to Index</a>
+
+        <header>
+            <div class="brand">Haven256</div>
+            <h1>Project #2 — Haven256 Internal AI Operating System</h1>
+            <p class="subtitle">12-Week Intern Program Plan</p>
+        </header>
+
+        <!-- Section 1: One-Page Program Plan -->
+        <section>
+            <h2>Section 1 — One-Page Program Plan</h2>
+
+            <div class="about">
+                <h3>Mission</h3>
+                <p>Build a suite of five AI-powered tools that Haven256 actually uses after the interns leave — not a demo. Real internal infrastructure that saves time, wins more work, and keeps the team better informed.</p>
+            </div>
+
+            <h3>Team</h3>
+            <p>3 interns: Intern A (data &amp; back-end), Intern B (AI &amp; analysis), Intern C (dashboard &amp; user experience)</p>
+
+            <h3>Duration</h3>
+            <p>12 weeks. First two weeks dedicated to learning. Building begins Week 3. Core product expected largely done by Weeks 10–11, with Week 12 for finishing touches and handoff.</p>
+
+            <h3>Output</h3>
+            <p>5 working AI tools in a single dashboard; full handoff package; live and usable on Day 1 after interns leave.</p>
+
+            <h3>Rhythm</h3>
+            <p>Something shipped every week + check-in every two weeks.</p>
+
+            <h3>Success</h3>
+            <p>Any Haven256 employee — with no technical background — can log in and use all five tools on Day 1 after handoff.</p>
+
+            <h3>Tools</h3>
+            <p>AI language models · Web dashboard · Automated data pipelines · Cloud-ready database</p>
+
+            <h3>Modules</h3>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Module</th>
+                            <th>What It Does</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>M1</td>
+                            <td>Internal Knowledge Base</td>
+                            <td>Upload any internal document and ask questions in plain English — answers cite the source.</td>
+                        </tr>
+                        <tr>
+                            <td>M2</td>
+                            <td>Contract &amp; BD Intelligence</td>
+                            <td>Monitors government contract portals daily, scores opportunities against Haven256's capabilities, sends morning digest.</td>
+                        </tr>
+                        <tr>
+                            <td>M3</td>
+                            <td>AI Proposal Writer</td>
+                            <td>Drop in an RFP and get a structured draft response pulling language from Haven256's actual past proposals.</td>
+                        </tr>
+                        <tr>
+                            <td>M4</td>
+                            <td>Competitive Intelligence Engine</td>
+                            <td>Tracks competitors across news, job postings, and contract wins. Generates weekly briefing automatically.</td>
+                        </tr>
+                        <tr>
+                            <td>M5</td>
+                            <td>Regulatory Early Warning</td>
+                            <td>Monitors regulatory activity, flags changes affecting Haven256 with urgency levels and summaries.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Guiding Principles</h3>
+            <ul>
+                <li>Knowledge Base (M1) is the foundation — should be priority in early build weeks</li>
+                <li>If behind schedule, finish fewer things well than rush through all five</li>
+                <li>Every tool tested by non-technical Haven256 employee before considered done</li>
+                <li>No passwords or API keys stored in code</li>
+            </ul>
+        </section>
+
+        <!-- Section 2: 12-Week Roadmap -->
+        <section>
+            <h2>Section 2 — 12-Week Roadmap</h2>
+
+            <div class="phase-block">
+                <h3>Phase 0 — Learning &amp; Orientation</h3>
+                <div class="phase-meta">Weeks 1–2 · Goal: Build the foundation before building anything</div>
+                <ul>
+                    <li>Introduction to tools and platforms</li>
+                    <li>Version control orientation</li>
+                    <li>Introduction to AI APIs — requests and responses</li>
+                    <li>Hands-on practice with low-stakes exercises</li>
+                    <li>Review of Haven256's existing proposals and contracts</li>
+                    <li>By end of Week 2: every intern can do a basic working exercise independently</li>
+                </ul>
+            </div>
+
+            <div class="phase-block">
+                <h3>Phase 1 — Setup &amp; Alignment</h3>
+                <div class="phase-meta">Week 3</div>
+                <ul>
+                    <li>Shared workspace set up</li>
+                    <li>Agreement on "done" for each tool</li>
+                    <li>Tool and technology choices confirmed</li>
+                    <li><strong>Delivered:</strong> shared workspace with version control; written scope doc with acceptance criteria</li>
+                </ul>
+            </div>
+
+            <div class="phase-block">
+                <h3>Phase 2 — First Working Version</h3>
+                <div class="phase-meta">Weeks 4–5 · Goal: Ugly but Working</div>
+                <ul>
+                    <li>Knowledge Base: upload 3 sample documents, ask in plain English, get answer with source</li>
+                    <li>Contract BD: pull live government contract listings, auto-score against keywords</li>
+                    <li>Competitive Intel: pull one news source for a competitor, return structured summary</li>
+                    <li><strong>Week 4 Delivered:</strong> knowledge base working end-to-end + government contract feed live</li>
+                    <li><strong>Week 5 Delivered:</strong> answers cite source; contracts scored; first competitor summary → Demo #1</li>
+                </ul>
+            </div>
+
+            <div class="phase-block">
+                <h3>Phase 3 — Feature Build</h3>
+                <div class="phase-meta">Weeks 6–9</div>
+                <ul>
+                    <li><strong>Week 6:</strong> Knowledge Base polish + regulatory data collection start</li>
+                    <li><strong>Week 7:</strong> Contract BD features — historical data, scoring logic, morning digest prototype</li>
+                    <li><strong>Week 8:</strong> Proposal Writer — past proposals loaded, RFP parser, first draft output → Demo #2</li>
+                    <li><strong>Week 9:</strong> Competitive Intel features + regulatory alerts with urgency scoring</li>
+                </ul>
+            </div>
+
+            <div class="phase-block">
+                <h3>Phase 4 — Integration + Polish</h3>
+                <div class="phase-meta">Weeks 10–11</div>
+                <ul>
+                    <li><strong>Week 10:</strong> Unified dashboard, cross-tool workflows, one-click contract→proposal → Demo #3</li>
+                    <li><strong>Week 11:</strong> Error handling, security, automated schedules, usage logging, stress test, written guides → Demo #4</li>
+                </ul>
+            </div>
+
+            <div class="phase-block">
+                <h3>Phase 5 — Final Demo + Handoff</h3>
+                <div class="phase-meta">Week 12</div>
+                <ul>
+                    <li><strong>Days 1–2:</strong> Fix issues from Demo #4</li>
+                    <li><strong>Day 3:</strong> Verify setup instructions on clean machine</li>
+                    <li><strong>Day 4:</strong> Final Presentation</li>
+                    <li><strong>Day 5:</strong> Full knowledge transfer</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Section 3: Intern Ownership & Definitions of Done -->
+        <section>
+            <h2>Section 3 — Intern Ownership &amp; Definitions of Done</h2>
+
+            <h3>Ownership Matrix</h3>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Module</th>
+                            <th>Secondary</th>
+                            <th>How It Connects</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>M1 — Internal Knowledge Base</td>
+                            <td>All (users)</td>
+                            <td>Foundation for all other tools</td>
+                        </tr>
+                        <tr>
+                            <td>M2 — Contract &amp; BD Intelligence</td>
+                            <td>Intern A (data)</td>
+                            <td>Sends opportunities to Proposal Writer</td>
+                        </tr>
+                        <tr>
+                            <td>M3 — AI Proposal Writer</td>
+                            <td>Intern B (knowledge)</td>
+                            <td>Pulls from M1; triggered by M2</td>
+                        </tr>
+                        <tr>
+                            <td>M4 — Competitive Intelligence Engine</td>
+                            <td>Intern C (storage)</td>
+                            <td>Briefings searchable via M1</td>
+                        </tr>
+                        <tr>
+                            <td>M5 — Regulatory Early Warning</td>
+                            <td>All</td>
+                            <td>Alert panel in main dashboard</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Integration Definition (Week 10)</h3>
+            <p>"Connected" means:</p>
+            <ul>
+                <li>One login gives access to all five tools</li>
+                <li>Proposal Writer auto-loads relevant past language when given RFP</li>
+                <li>Contract BD can send opportunity to Proposal Writer in one click</li>
+                <li>Competitive Intel briefings searchable through Knowledge Base</li>
+                <li>Regulatory alerts as notification panel on dashboard</li>
+                <li>Every action logged</li>
+            </ul>
+
+            <h3>Definitions of Done</h3>
+
+            <div class="mod-block">
+                <h3>M1 — Internal Knowledge Base</h3>
+                <ul class="checklist">
+                    <li>Upload any document (PDF or Word) searchable within 60 seconds</li>
+                    <li>Ask in plain English, get answer citing source document and page</li>
+                    <li>At least 20 internal documents loaded at handoff</li>
+                    <li>Fewer than 15% wrong or irrelevant answers on 20-question test</li>
+                    <li>Any employee can add document through dashboard</li>
+                </ul>
+                <p class="acceptance">Acceptance test: Upload 3 new documents, ask 5 questions, verify answers.</p>
+            </div>
+
+            <div class="mod-block">
+                <h3>M2 — Contract &amp; BD Intelligence</h3>
+                <ul class="checklist">
+                    <li>Dashboard shows new relevant opportunities updated at least once daily</li>
+                    <li>Each opportunity scored 0–100 with one-sentence explanation</li>
+                    <li>Filter by contract type and category</li>
+                    <li>Morning digest with top 5 opportunities automatically</li>
+                    <li>Historical context for similar contracts</li>
+                </ul>
+                <p class="acceptance">Acceptance test: Open dashboard Monday morning, see past 24 hours, confirm scores.</p>
+            </div>
+
+            <div class="mod-block">
+                <h3>M3 — AI Proposal Writer</h3>
+                <ul class="checklist">
+                    <li>Paste or upload RFP → system identifies requirements, page limits, evaluation criteria</li>
+                    <li>Generates structured draft covering Technical, Management, Past Performance sections</li>
+                    <li>Uses language from actual past proposals, not generic filler</li>
+                    <li>Output is downloadable Word document</li>
+                    <li>Full draft in under 3 minutes</li>
+                </ul>
+                <p class="acceptance">Acceptance test: Run real RFP, confirm draft references actual Haven256 work.</p>
+            </div>
+
+            <div class="mod-block">
+                <h3>M4 — Competitive Intelligence Engine</h3>
+                <ul class="checklist">
+                    <li>Weekly briefing generated automatically every Monday for up to 10 competitors</li>
+                    <li>Covers: contract wins, job postings, news mentions, notable activity</li>
+                    <li>Written in plain English</li>
+                    <li>Past briefings stored and searchable</li>
+                    <li>Add or remove competitor through dashboard</li>
+                </ul>
+                <p class="acceptance">Acceptance test: Read this week's briefing, confirm accurate sourced info on 2+ competitors.</p>
+            </div>
+
+            <div class="mod-block">
+                <h3>M5 — Regulatory Early Warning</h3>
+                <ul class="checklist">
+                    <li>Monitors at least 5 relevant regulatory sources</li>
+                    <li>New enforcement actions or rule changes trigger alert within 24 hours</li>
+                    <li>Each alert explains what changed, which business area, urgency level (High / Medium / Monitor)</li>
+                    <li>Users configure monitoring areas through dashboard</li>
+                    <li>90 days of alert history searchable</li>
+                </ul>
+                <p class="acceptance">Acceptance test: Confirm a regulatory change this week was captured and classified correctly.</p>
+            </div>
+        </section>
+
+        <!-- Section 4: Biweekly Check-In Schedule -->
+        <section>
+            <h2>Section 4 — Biweekly Check-In Schedule</h2>
+
+            <div class="demo-block">
+                <h3>Demo #1 — End of Week 4/5 — Proof of Life</h3>
+                <ul>
+                    <li><strong>LIVE:</strong> Knowledge Base answers question from real Haven256 document</li>
+                    <li><strong>LIVE:</strong> Government contract feed pulling and scoring live</li>
+                    <li><strong>LIVE:</strong> First competitor summary from live news</li>
+                    <li>Learnings, blockers, next 2 weeks plan</li>
+                </ul>
+            </div>
+
+            <div class="demo-block">
+                <h3>Demo #2 — End of Week 8 — Feature Progress</h3>
+                <ul>
+                    <li><strong>LIVE:</strong> Full document library answering correctly</li>
+                    <li><strong>LIVE:</strong> Daily contract digest with scores and filters</li>
+                    <li><strong>LIVE:</strong> First proposal draft from real RFP</li>
+                    <li><strong>LIVE:</strong> Weekly competitive briefing</li>
+                    <li>Scope check, next 2 weeks plan</li>
+                </ul>
+            </div>
+
+            <div class="demo-block">
+                <h3>Demo #3 — End of Week 10 — One Platform</h3>
+                <ul>
+                    <li><strong>LIVE:</strong> Full platform tour — one login, all five tools</li>
+                    <li><strong>LIVE:</strong> Contract to Proposal Writer in one click</li>
+                    <li><strong>LIVE:</strong> Regulatory alert in dashboard</li>
+                    <li><strong>LIVE:</strong> Competitive briefing found through Knowledge Base</li>
+                    <li>Integration status, next 2 weeks plan</li>
+                </ul>
+            </div>
+
+            <div class="demo-block">
+                <h3>Demo #4 — End of Week 11 — Company Ready</h3>
+                <ul>
+                    <li><strong>LIVE:</strong> Non-technical Haven256 employee uses platform</li>
+                    <li>Handoff package review</li>
+                    <li>Usage log demo</li>
+                    <li>Known issues, backlog, final week plan</li>
+                </ul>
+            </div>
+
+            <div class="demo-block">
+                <h3>Final Presentation — Week 12 Day 4</h3>
+                <ul>
+                    <li>What we planned vs what we built</li>
+                    <li><strong>LIVE DEMO</strong> — full platform</li>
+                    <li>Business value: time saved, proposals accelerated</li>
+                    <li>How it works — plain English, 5 minutes max</li>
+                    <li>What each intern learned — 2 minutes each</li>
+                    <li>Handoff walkthrough, top 3 next steps, Q&amp;A</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Section 5: Ship Every Week -->
+        <section>
+            <h2>Section 5 — Ship Every Week — What Counts</h2>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Artifact Type</th>
+                            <th>What Qualifies</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Working Data Pipeline</td>
+                            <td>Runs automatically; pulls real data; output visible and verifiable</td>
+                        </tr>
+                        <tr>
+                            <td>Working Dashboard Feature</td>
+                            <td>Live in shared environment; wired to real data; no placeholder content</td>
+                        </tr>
+                        <tr>
+                            <td>Generated Report Output</td>
+                            <td>An actual report the tool produced — not a template or example</td>
+                        </tr>
+                        <tr>
+                            <td>Scored Opportunity List</td>
+                            <td>Real contract listings with scores and rationale</td>
+                        </tr>
+                        <tr>
+                            <td>Proposal Draft</td>
+                            <td>Real AI-generated draft from actual RFP — not a mock</td>
+                        </tr>
+                        <tr>
+                            <td>Test Results</td>
+                            <td>At least 5 documented tests showing tool works as intended</td>
+                        </tr>
+                        <tr>
+                            <td>Integration Proof</td>
+                            <td>Demo or screenshot of two tools exchanging real data</td>
+                        </tr>
+                        <tr>
+                            <td>Written Guide</td>
+                            <td>Setup or how-to guide that a new person can follow from scratch</td>
+                        </tr>
+                        <tr>
+                            <td>Scheduled Job</td>
+                            <td>Runs automatically on timer; output logged; failure alerts configured</td>
+                        </tr>
+                        <tr>
+                            <td>Learning Summary</td>
+                            <td>Plain-English writeup of what was learned (Weeks 1–2 only)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Section 6: Handoff Package Checklist -->
+        <section>
+            <h2>Section 6 — Handoff Package Checklist</h2>
+
+            <div class="about">
+                <p>"The handoff package is non-negotiable. Without it, the program did not complete successfully."</p>
+            </div>
+
+            <h3>Code &amp; Files</h3>
+            <ul class="checklist">
+                <li>All work merged into main repository</li>
+                <li>Template file listing every configuration value</li>
+                <li>No passwords or API keys in code</li>
+                <li>All dependencies listed with exact versions</li>
+                <li>Automated checks passing</li>
+            </ul>
+
+            <h3>Setup &amp; How-To Guides</h3>
+            <ul class="checklist">
+                <li>One paragraph explaining platform</li>
+                <li>Prerequisites listed</li>
+                <li>Step-by-step setup instructions tested by non-author</li>
+                <li>Instructions for running each tool individually and together</li>
+                <li>Instructions for adding documents, competitors, regulatory topics</li>
+            </ul>
+
+            <h3>Configuration &amp; Data</h3>
+            <ul class="checklist">
+                <li>Every setting documented</li>
+                <li>Example data included (sample RFP, competitor list, 3 seed documents)</li>
+                <li>Data sources listed with usage limits</li>
+                <li>Automated schedule explained in plain English</li>
+            </ul>
+
+            <h3>Known Issues &amp; Backlog</h3>
+            <ul class="checklist">
+                <li>Known issues documented with severity and workaround</li>
+                <li>Backlog with acceptance criteria and effort estimates</li>
+                <li>Top 5 next steps prioritized</li>
+            </ul>
+
+            <h3>Operations</h3>
+            <ul class="checklist">
+                <li>All automated jobs running</li>
+                <li>Login required</li>
+                <li>Usage log confirmed</li>
+                <li>Estimated monthly cost documented</li>
+            </ul>
+        </section>
+
+        <!-- Section 7: Risk Register & Guardrails -->
+        <section>
+            <h2>Section 7 — Risk Register &amp; Guardrails</h2>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Risk</th>
+                            <th>Severity</th>
+                            <th>Mitigation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Interns take longer to get up to speed</td>
+                            <td>High</td>
+                            <td>Learning phase built in; first build milestone can flex</td>
+                        </tr>
+                        <tr>
+                            <td>AI answers are wrong or unreliable</td>
+                            <td>High</td>
+                            <td>Validate quality early; require source citations; set accuracy threshold</td>
+                        </tr>
+                        <tr>
+                            <td>Too many modules started, none finished</td>
+                            <td>High</td>
+                            <td>Finish fewer things well; Regulatory can be cut first; KB, Contract BD, Proposal Writer are core</td>
+                        </tr>
+                        <tr>
+                            <td>Government contract data feeds go down</td>
+                            <td>Medium</td>
+                            <td>Cache locally; use saved data for testing; don't rely on live feeds during demos</td>
+                        </tr>
+                        <tr>
+                            <td>Proposal Writer drafts too poor to be useful</td>
+                            <td>Medium</td>
+                            <td>Test with real employee in Week 8; if less than half usable, change approach</td>
+                        </tr>
+                        <tr>
+                            <td>Tools don't connect during integration</td>
+                            <td>Medium</td>
+                            <td>Start thinking about connections in Week 7, not Week 10</td>
+                        </tr>
+                        <tr>
+                            <td>An intern leaves early</td>
+                            <td>Low-Med</td>
+                            <td>All work in shared repo from Day 1; primary and backup owner for each module</td>
+                        </tr>
+                        <tr>
+                            <td>AI costs exceed budget</td>
+                            <td>Low</td>
+                            <td>Use smallest AI model for routine tasks; reserve powerful model for proposal drafting; monitor weekly</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="cut-order">
+                <h3>Cut Order</h3>
+                <ul>
+                    <li><strong>Cut first:</strong> Regulatory Early Warning</li>
+                    <li><strong>Cut second:</strong> Competitive Intel advanced features — keep weekly briefing</li>
+                    <li><strong>Cut third:</strong> Historical contract data — keep live daily feed</li>
+                    <li><strong>Never cut:</strong> Knowledge Base</li>
+                    <li><strong>Never cut:</strong> Contract BD live feed</li>
+                    <li><strong>Never cut:</strong> Handoff package</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Section 8: How the Platform Works -->
+        <section>
+            <h2>Section 8 — How the Platform Works — Plain English</h2>
+
+            <div class="about">
+                <p>"One platform. One login. One place to find everything."</p>
+            </div>
+
+            <h3>How Data Gets In</h3>
+            <ul>
+                <li>Government contract portals checked daily</li>
+                <li>Competitor news, job postings, and data collected weekly</li>
+                <li>Regulatory sources scanned daily</li>
+                <li>Staff upload documents through dashboard anytime</li>
+                <li>All on a timer — no manual triggers</li>
+            </ul>
+
+            <h3>How Information Is Stored</h3>
+            <ul>
+                <li>One central database for everything</li>
+                <li>Documents broken into searchable sections</li>
+                <li>Nothing on individual laptops — shared environment</li>
+            </ul>
+
+            <h3>How the AI Answers Questions</h3>
+            <ul>
+                <li>Finds most relevant document sections</li>
+                <li>AI language model writes plain-English answer</li>
+                <li>Every answer cites source document and section</li>
+                <li>Same approach powers Proposal Writer</li>
+            </ul>
+
+            <h3>The Dashboard</h3>
+            <p>All five tools from single web page — one URL, one login. No installation for staff — runs in any browser.</p>
+
+            <h3>Login &amp; Access Control</h3>
+            <ul>
+                <li>Username and password required</li>
+                <li>Every action logged with user name and timestamp</li>
+                <li>Access log viewable by admins</li>
+            </ul>
+
+            <h3>Platform Summary</h3>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Component</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Five tools</td>
+                            <td>Knowledge Base, Contract BD, Proposal Writer, Competitive Intel, Regulatory Alerts</td>
+                        </tr>
+                        <tr>
+                            <td>One dashboard</td>
+                            <td>Single login, browser-based, no installation</td>
+                        </tr>
+                        <tr>
+                            <td>Automated data</td>
+                            <td>Government contracts daily · Competitor data weekly · Regulatory alerts daily</td>
+                        </tr>
+                        <tr>
+                            <td>AI engine</td>
+                            <td>OpenAI or Anthropic language models for answers and drafting</td>
+                        </tr>
+                        <tr>
+                            <td>Access control</td>
+                            <td>Username + password · Usage logging on every action</td>
+                        </tr>
+                        <tr>
+                            <td>Handoff ready</td>
+                            <td>Setup guide, video walkthroughs, known issues, and backlog included</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <footer>
+            <strong>Haven256</strong> · Project #2 — Internal AI Operating System · 12-Week Intern Program · Confidential
+        </footer>
+    </div>
+</body>
+</html>

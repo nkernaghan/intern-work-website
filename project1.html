@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project #1 — Crypto Mixer De-Anonymization & Cross-Chain Laundering Tracer — Haven256</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --gold: #C9A227;
+            --dark-navy: rgba(13, 21, 38, 0.92);
+            --navy: rgba(27, 42, 74, 0.8);
+            --cream: rgba(240, 235, 224, 0.95);
+            --cream-light: rgba(240, 235, 224, 0.7);
+            --cream-subtle: rgba(240, 235, 224, 0.5);
+            --serif: 'EB Garamond', 'Garamond', serif;
+            --sans: 'Calibri', 'Segoe UI', sans-serif;
+        }
+
+        body {
+            font-family: var(--sans);
+            color: var(--cream);
+            background: var(--dark-navy);
+            line-height: 1.7;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid var(--gold);
+        }
+
+        .brand {
+            font-family: var(--serif);
+            font-size: 1.2rem;
+            color: var(--gold);
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            letter-spacing: 1px;
+        }
+
+        h1 {
+            font-family: var(--serif);
+            font-size: 2.6rem;
+            color: var(--cream);
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            font-size: 0.95rem;
+            color: var(--cream-light);
+            font-style: italic;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 2rem;
+            color: var(--gold);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .back-link:hover {
+            color: var(--cream);
+        }
+
+        .about {
+            background: var(--navy);
+            padding: 1.5rem;
+            border-left: 4px solid var(--gold);
+            margin-bottom: 2rem;
+            border-radius: 2px;
+        }
+
+        .about h3 {
+            margin-top: 0;
+        }
+
+        section {
+            margin: 2rem 0;
+        }
+
+        h2 {
+            font-family: var(--serif);
+            font-size: 1.6rem;
+            color: var(--gold);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px solid rgba(201, 162, 39, 0.2);
+            font-weight: 700;
+        }
+
+        h3 {
+            font-family: var(--serif);
+            font-size: 1.2rem;
+            color: var(--cream);
+            margin: 1.5rem 0 0.8rem 0;
+            font-weight: 700;
+        }
+
+        h4 {
+            font-family: var(--serif);
+            font-size: 1.05rem;
+            color: var(--gold);
+            margin: 1.4rem 0 0.6rem 0;
+            font-weight: 700;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            line-height: 1.8;
+        }
+
+        ul {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        li {
+            margin-bottom: 0.6rem;
+            line-height: 1.6;
+        }
+
+        strong {
+            color: var(--cream);
+            font-weight: 700;
+        }
+
+        /* ── Tables ── */
+        .table-wrap {
+            overflow-x: auto;
+            margin-bottom: 1.5rem;
+            border-radius: 2px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.93rem;
+        }
+
+        thead tr {
+            background: rgba(27, 42, 74, 0.95);
+        }
+
+        thead th {
+            color: var(--gold);
+            font-family: var(--serif);
+            font-size: 1rem;
+            font-weight: 700;
+            padding: 1rem;
+            text-align: left;
+            letter-spacing: 0.3px;
+            border-bottom: 2px solid rgba(201, 162, 39, 0.4);
+        }
+
+        tbody tr {
+            background: rgba(13, 21, 38, 0.6);
+        }
+
+        tbody tr:nth-child(even) {
+            background: rgba(27, 42, 74, 0.4);
+        }
+
+        tbody td {
+            padding: 0.8rem 1rem;
+            border-bottom: 1px solid rgba(201, 162, 39, 0.12);
+            vertical-align: top;
+            color: var(--cream);
+        }
+
+        tbody td:first-child {
+            color: var(--gold);
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        /* ── Module cards ── */
+        .module-card {
+            background: var(--navy);
+            border-left: 4px solid var(--gold);
+            border-radius: 2px;
+            padding: 1.5rem 1.5rem 1rem 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .module-card h3 {
+            margin-top: 0;
+            color: var(--gold);
+        }
+
+        .module-card .role-tag {
+            display: inline-block;
+            font-size: 0.78rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            color: var(--cream-light);
+            background: rgba(201, 162, 39, 0.12);
+            border: 1px solid rgba(201, 162, 39, 0.25);
+            border-radius: 2px;
+            padding: 0.2rem 0.5rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .dod-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--gold);
+            margin: 1.2rem 0 0.4rem 0;
+        }
+
+        .acceptance-box {
+            background: rgba(13, 21, 38, 0.5);
+            border-left: 3px solid rgba(201, 162, 39, 0.35);
+            padding: 0.8rem 1rem;
+            margin-top: 0.8rem;
+            font-size: 0.9rem;
+            color: var(--cream-light);
+            font-style: italic;
+        }
+
+        .acceptance-box strong {
+            color: var(--gold);
+            font-style: normal;
+        }
+
+        /* ── Timeline phases ── */
+        .phase {
+            background: var(--navy);
+            border-left: 4px solid var(--gold);
+            border-radius: 2px;
+            padding: 1.5rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .phase h3 {
+            margin-top: 0;
+            color: var(--gold);
+        }
+
+        .phase-goal {
+            font-size: 0.88rem;
+            color: var(--cream-light);
+            font-style: italic;
+            margin-bottom: 0.8rem;
+        }
+
+        /* ── Checklist ── */
+        .checklist {
+            list-style: none;
+            margin-left: 0;
+            margin-bottom: 1rem;
+        }
+
+        .checklist li {
+            padding: 0.45rem 0 0.45rem 2rem;
+            position: relative;
+            border-bottom: 1px solid rgba(240, 235, 224, 0.06);
+        }
+
+        .checklist li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 1.1rem;
+            height: 1.1rem;
+            border: 2px solid rgba(201, 162, 39, 0.5);
+            border-radius: 2px;
+            background: rgba(13, 21, 38, 0.6);
+        }
+
+        /* ── Severity badges ── */
+        .sev-high   { color: #e07070; font-weight: 700; }
+        .sev-medium { color: #e0b870; font-weight: 700; }
+        .sev-low    { color: #7ab8a0; font-weight: 700; }
+
+        /* ── Cut order list ── */
+        .cut-list {
+            margin-left: 0;
+            list-style: none;
+            counter-reset: cut-counter;
+        }
+
+        .cut-list li {
+            counter-increment: cut-counter;
+            padding: 0.5rem 0.5rem 0.5rem 2.8rem;
+            position: relative;
+            border-bottom: 1px solid rgba(240, 235, 224, 0.06);
+        }
+
+        .cut-list li::before {
+            content: counter(cut-counter);
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 1.8rem;
+            height: 1.8rem;
+            background: rgba(201, 162, 39, 0.15);
+            border: 1px solid rgba(201, 162, 39, 0.3);
+            border-radius: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--gold);
+        }
+
+        .cut-list li.never-cut {
+            color: var(--cream-light);
+        }
+
+        .cut-list li.never-cut::before {
+            content: 'X';
+            background: rgba(224, 112, 112, 0.15);
+            border-color: rgba(224, 112, 112, 0.4);
+            color: #e07070;
+        }
+
+        /* ── Demo schedule ── */
+        .demo-list {
+            list-style: none;
+            margin-left: 0;
+        }
+
+        .demo-list li {
+            padding: 0.8rem 1rem 0.8rem 1.2rem;
+            border-left: 3px solid rgba(201, 162, 39, 0.3);
+            margin-bottom: 0.7rem;
+            background: rgba(13, 21, 38, 0.4);
+        }
+
+        .demo-list li strong {
+            color: var(--gold);
+        }
+
+        /* ── Footer ── */
+        footer {
+            text-align: center;
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(201, 162, 39, 0.2);
+            color: var(--cream-light);
+            font-size: 0.85rem;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 768px) {
+            .container {
+                padding: 2rem 1rem;
+            }
+
+            h1 {
+                font-size: 1.9rem;
+            }
+
+            h2 {
+                font-size: 1.2rem;
+            }
+
+            .table-wrap {
+                -webkit-overflow-scrolling: touch;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← Back to Index</a>
+
+        <header>
+            <div class="brand">Haven256</div>
+            <h1>Project #1 — Crypto Mixer De-Anonymization &amp; Cross-Chain Laundering Tracer</h1>
+            <p class="subtitle">12-Week Intern Program · Summer 2026 · Confidential</p>
+        </header>
+
+        <!-- PART A -->
+        <section>
+            <h2>Part A — Program Brief</h2>
+
+            <div class="about">
+                <h3>What This Is</h3>
+                <p>A 12-week intern program to build a platform that traces criminal money through crypto mixers and across multiple blockchains — even when bad actors deliberately obscure the trail. The end product is sellable to law enforcement agencies, crypto compliance teams, and exchanges.</p>
+            </div>
+
+            <h3>Intern Ownership</h3>
+            <p>Three interns will own the build end-to-end.</p>
+            <ul>
+                <li><strong>Intern A</strong> — Data collection and cross-chain tracing</li>
+                <li><strong>Intern B</strong> — Pattern detection and the wallet relationship map</li>
+                <li><strong>Intern C</strong> — Nation-state flagging and the investigation dashboard</li>
+            </ul>
+
+            <h3>Program Structure</h3>
+            <p>The first two weeks are dedicated to learning — blockchain fundamentals, version control, and hands-on API practice. Building begins in Week 3. The core platform is expected to be largely complete by Weeks 10–11, with Week 12 reserved for finishing touches and handoff.</p>
+
+            <h3>Success Criterion</h3>
+            <p>Platform traces a test transaction from Bitcoin through a mixer and across two blockchains to its final destination — verified live, in front of a non-technical stakeholder.</p>
+
+            <h3>Commercial Angle</h3>
+            <p>Sellable service to law enforcement agencies, crypto compliance teams, and exchanges.</p>
+
+            <h3>Standards</h3>
+            <ul>
+                <li><strong>Weekly standard:</strong> Something real ships every week. A week where nothing usable is produced is a week to pay attention to.</li>
+                <li><strong>Never:</strong> Passwords or credentials stored in code. All scores labeled as probabilistic — never definitive conclusions.</li>
+            </ul>
+
+            <h3>The Six Modules</h3>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Module</th>
+                            <th>Role</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>M1</td>
+                            <td>Blockchain Data Collection</td>
+                            <td>Foundation layer. Pull transaction history from Bitcoin, Ethereum, Tron, and Solana.</td>
+                        </tr>
+                        <tr>
+                            <td>M2</td>
+                            <td>Mixer Analysis Engine</td>
+                            <td>Detect patterns revealing which transactions went through the same mixer.</td>
+                        </tr>
+                        <tr>
+                            <td>M3</td>
+                            <td>Cross-Chain Tracer</td>
+                            <td>Follow funds across blockchains through exchange bridges.</td>
+                        </tr>
+                        <tr>
+                            <td>M4</td>
+                            <td>Wallet Relationship Map</td>
+                            <td>Persistent map of connected wallets and entities across investigations.</td>
+                        </tr>
+                        <tr>
+                            <td>M5</td>
+                            <td>Nation-State Pattern Flagging</td>
+                            <td>Flag patterns consistent with groups like Lazarus Group. 0–100 probabilistic score.</td>
+                        </tr>
+                        <tr>
+                            <td>M6</td>
+                            <td>Investigation Dashboard</td>
+                            <td>Visual interface: explore networks, follow traces, review alerts, export case reports.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- PART B -->
+        <section>
+            <h2>Part B — The Six Modules</h2>
+
+            <div class="module-card">
+                <div class="role-tag">Intern A</div>
+                <h3>M1 — Blockchain Data Collection</h3>
+                <p>Foundation everything else depends on. Pulls raw transaction data from Bitcoin, Ethereum, Tron, and Solana. All data stored locally so the platform keeps working even if a data source goes down. Collection runs on schedule — no manual triggering.</p>
+                <div class="dod-label">Definition of Done</div>
+                <ul>
+                    <li>Enter any wallet address — full transaction history appears within 30 seconds</li>
+                    <li>Works for Bitcoin, Ethereum, Tron, and Solana</li>
+                    <li>Data source outages handled gracefully — no crashes</li>
+                    <li>All four networks collecting data simultaneously</li>
+                </ul>
+                <div class="acceptance-box">
+                    <strong>Acceptance Test:</strong> Enter a known public wallet address; confirm full transaction history appears in dashboard within 30 seconds.
+                </div>
+            </div>
+
+            <div class="module-card">
+                <div class="role-tag">Intern B</div>
+                <h3>M2 — Mixer Analysis Engine</h3>
+                <p>Detects patterns revealing which transactions passed through the same mixing round — similar timing, similar output amounts, address behavior relative to one another. Every finding labeled with a confidence score — nothing presented as definitive.</p>
+                <div class="dod-label">Definition of Done</div>
+                <ul>
+                    <li>Given a post-mixer wallet, identify at least 2 others from the same mixing round</li>
+                    <li>Timing patterns shown visually on timeline</li>
+                    <li>Amount distribution report shows how funds were broken up before and after mixing</li>
+                    <li>Confidence score displayed for each wallet link</li>
+                </ul>
+                <div class="acceptance-box">
+                    <strong>Acceptance Test:</strong> Run analysis on a known public mixer case; confirm system identifies the mixing round and links correct addresses.
+                </div>
+            </div>
+
+            <div class="module-card">
+                <div class="role-tag">Intern A</div>
+                <h3>M3 — Cross-Chain Tracer</h3>
+                <p>Follows money across blockchains through bridges and exchanges. Maintains a list of known transfer points. Links the sending wallet on one network to the receiving wallet on another.</p>
+                <div class="dod-label">Definition of Done</div>
+                <ul>
+                    <li>Follow funds from Bitcoin to Ethereum to Tron automatically</li>
+                    <li>Each transfer point labeled with bridge or exchange name</li>
+                    <li>Full path displayed visually: Network A Wallet → Transfer Point → Network B Wallet</li>
+                    <li>Top 10 known transfer points in database</li>
+                </ul>
+                <div class="acceptance-box">
+                    <strong>Acceptance Test:</strong> Trace a known cross-chain transaction from a public hack report; confirm transfer point and destination wallet correctly identified.
+                </div>
+            </div>
+
+            <div class="module-card">
+                <div class="role-tag">Intern B</div>
+                <h3>M4 — Wallet Relationship Map</h3>
+                <p>Stores every wallet and transaction as a connected network. Known entities labeled — exchanges, mixers, criminal groups. Analysts can query: "show me everything connected to this wallet within 3 steps."</p>
+                <div class="dod-label">Definition of Done</div>
+                <ul>
+                    <li>Every traced wallet stored with attributes and connections</li>
+                    <li>Wallet groups shown as connected clusters with group identifier</li>
+                    <li>Known entities labeled</li>
+                    <li>Searchable: "show me all wallets connected to X within 3 steps"</li>
+                </ul>
+                <div class="acceptance-box">
+                    <strong>Acceptance Test:</strong> Search a known exchange deposit address; confirm map shows connected wallets and correct entity label.
+                </div>
+            </div>
+
+            <div class="module-card">
+                <div class="role-tag">Intern C</div>
+                <h3>M5 — Nation-State Pattern Flagging</h3>
+                <p>Loads known behavioral signatures from public reports (Lazarus Group, etc.). Every wallet cluster receives a 0–100 likelihood score. Scores above 70 trigger a dashboard alert. Every score comes with a plain-English explanation.</p>
+                <div class="dod-label">Definition of Done</div>
+                <ul>
+                    <li>Every analyzed wallet cluster receives a 0–100 likelihood score</li>
+                    <li>Scores above 70 trigger alert in dashboard</li>
+                    <li>Each score explained with specific patterns that contributed</li>
+                    <li>Known state-sponsored wallets score above 80 in testing</li>
+                </ul>
+                <div class="acceptance-box">
+                    <strong>Acceptance Test:</strong> Run a known state-sponsored wallet cluster; confirm score above 70 with plain-English explanation.
+                </div>
+            </div>
+
+            <div class="module-card">
+                <div class="role-tag">Intern C</div>
+                <h3>M6 — Investigation Dashboard</h3>
+                <p>The interface analysts actually use, runs in any browser. Enter a wallet address and get a complete forward and backward money trail. High-scoring wallets surface in the alert queue. One-click PDF case report export.</p>
+                <div class="dod-label">Definition of Done</div>
+                <ul>
+                    <li>Interactive wallet network map: zoom, filter by network, click for details</li>
+                    <li>Trace view: enter address, see full forward and backward money path</li>
+                    <li>Alert queue showing flagged wallets with scores and explanation</li>
+                    <li>One-click PDF case report export</li>
+                </ul>
+                <div class="acceptance-box">
+                    <strong>Acceptance Test:</strong> Non-technical user navigates from flagged alert to trace view and exports case report without guidance.
+                </div>
+            </div>
+        </section>
+
+        <!-- PART C -->
+        <section>
+            <h2>Part C — Execution Timeline</h2>
+
+            <div class="phase">
+                <h3>Phase 0 · Weeks 1–2: Learning &amp; Orientation</h3>
+                <div class="phase-goal">Goal: Every intern can pull basic transaction data independently by end of Week 2.</div>
+                <ul>
+                    <li>Blockchain fundamentals — transactions, wallets, networks</li>
+                    <li>Version control orientation</li>
+                    <li>Blockchain data API practice</li>
+                    <li>Hands-on exercises with test data</li>
+                    <li>Review of public forensics research and known criminal cases</li>
+                </ul>
+            </div>
+
+            <div class="phase">
+                <h3>Phase 1 · Week 3: Setup &amp; Alignment</h3>
+                <div class="phase-goal">Goal: Shared workspace live; all four networks returning raw transaction data.</div>
+                <ul>
+                    <li>Data source access secured for all four networks</li>
+                    <li>5 known mixer transactions collected as test cases</li>
+                    <li>Written definitions of "connected wallet" and "cluster" agreed</li>
+                    <li>Data storage approach confirmed</li>
+                </ul>
+            </div>
+
+            <div class="phase">
+                <h3>Phase 2 · Weeks 4–5: First Working Version</h3>
+                <div class="phase-goal">Goal: One real transaction traced end-to-end. Check-in Demo #1 at end of Week 5.</div>
+                <ul>
+                    <li><strong>Week 4:</strong> Bitcoin and Ethereum data collection with basic wallet grouping</li>
+                    <li><strong>Week 5:</strong> First manual cross-chain trace — Bitcoin → Ethereum through a known bridge</li>
+                </ul>
+            </div>
+
+            <div class="phase">
+                <h3>Phase 3 · Weeks 6–9: Feature Build</h3>
+                <div class="phase-goal">Goal: Mixer analysis, cross-chain tracing, relationship map, and pattern flagging all working. Check-in Demo #2 at end of Week 8.</div>
+                <ul>
+                    <li><strong>Week 6:</strong> Timing analysis on known mixer test cases</li>
+                    <li><strong>Week 7:</strong> Amount patterns + wallet grouping</li>
+                    <li><strong>Week 8:</strong> Cross-chain trace Ethereum → Tron; relationship map with linked wallets</li>
+                    <li><strong>Week 9:</strong> Nation-state pattern flagging with scores and explanations</li>
+                </ul>
+            </div>
+
+            <div class="phase">
+                <h3>Phase 4 · Weeks 10–11: Integration + Reliability</h3>
+                <div class="phase-goal">Goal: One platform, all modules connected, non-technical user can operate solo. Demos #3 and #4.</div>
+                <ul>
+                    <li><strong>Week 10:</strong> Dashboard live, all modules from one URL, alert queue, PDF export</li>
+                    <li><strong>Week 11:</strong> Bulk processing 10,000 transactions, graceful degradation, handoff package</li>
+                </ul>
+            </div>
+
+            <div class="phase">
+                <h3>Phase 5 · Week 12: Final Demo + Handoff</h3>
+                <div class="phase-goal">Goal: Program complete, platform handed off, new operator runs solo from Day 1.</div>
+                <ul>
+                    <li><strong>Days 1–2:</strong> Fix Demo #4 issues, freeze scope</li>
+                    <li><strong>Day 3:</strong> Verify setup from scratch on a clean machine</li>
+                    <li><strong>Day 4:</strong> Final Presentation — live demo following a real public criminal case</li>
+                    <li><strong>Day 5:</strong> Full walkthrough and knowledge transfer</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- PART D -->
+        <section>
+            <h2>Part D — Weekly Rhythm &amp; Demos</h2>
+
+            <h3>Valid Artifact Types</h3>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Artifact Type</th>
+                            <th>What Qualifies</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Working Data Feed</td>
+                            <td>Pulls real transaction data from a live network; output visible and verifiable</td>
+                        </tr>
+                        <tr>
+                            <td>Working Analysis Output</td>
+                            <td>Real mixer round detection or wallet grouping on actual blockchain data</td>
+                        </tr>
+                        <tr>
+                            <td>Working Trace</td>
+                            <td>Real cross-chain trace with source and destination identified</td>
+                        </tr>
+                        <tr>
+                            <td>Relationship Map Snapshot</td>
+                            <td>Visual or exportable snapshot of linked wallets from real data</td>
+                        </tr>
+                        <tr>
+                            <td>Dashboard Feature</td>
+                            <td>Live in shared environment; wired to real data; no placeholder content</td>
+                        </tr>
+                        <tr>
+                            <td>Alert Output</td>
+                            <td>Real alert fired on test data with score and plain-English explanation</td>
+                        </tr>
+                        <tr>
+                            <td>Test Results</td>
+                            <td>At least 5 documented tests showing module works as intended</td>
+                        </tr>
+                        <tr>
+                            <td>Case Report Export</td>
+                            <td>Real PDF output generated from actual flagged data</td>
+                        </tr>
+                        <tr>
+                            <td>Learning Summary</td>
+                            <td>Plain-English writeup of what was learned (Weeks 1–2 only)</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Demo Schedule</h3>
+            <ul class="demo-list">
+                <li><strong>Demo #1 (End Week 5) — Proof of Life:</strong> Transaction history from all four networks, first mixer round identified, manual cross-chain trace</li>
+                <li><strong>Demo #2 (End Week 8) — Mixer Analysis + Cross-Chain Working:</strong> Full mixer analysis, automated cross-chain trace, relationship map</li>
+                <li><strong>Demo #3 (End Week 10) — One Platform:</strong> Full platform tour, nation-state flagging, alert queue, PDF export</li>
+                <li><strong>Demo #4 (End Week 11) — Company Ready:</strong> Non-technical user test, handoff package review, known issues, backlog</li>
+                <li><strong>Final Presentation (Week 12, Day 4):</strong> Live demo, business value, handoff walkthrough</li>
+            </ul>
+        </section>
+
+        <!-- PART E -->
+        <section>
+            <h2>Part E — Handoff &amp; Risk</h2>
+
+            <h3>Handoff Package Checklist</h3>
+
+            <h4>Code &amp; Repository</h4>
+            <ul class="checklist">
+                <li>All work merged into main repository</li>
+                <li>Template file listing every configuration value</li>
+                <li>No passwords or API keys in code</li>
+                <li>All dependencies listed with exact versions</li>
+                <li>Automated checks passing</li>
+            </ul>
+
+            <h4>Setup &amp; Documentation</h4>
+            <ul class="checklist">
+                <li>One paragraph explaining the platform</li>
+                <li>Prerequisites listed</li>
+                <li>Step-by-step setup instructions tested by someone who didn't write them</li>
+                <li>How to run each module individually and together</li>
+                <li>How to add new blockchain networks or entity addresses</li>
+            </ul>
+
+            <h4>Data &amp; Configuration</h4>
+            <ul class="checklist">
+                <li>Every setting documented</li>
+                <li>Known criminal wallet addresses and bridge addresses as seed data</li>
+                <li>Data sources listed with access requirements</li>
+                <li>Automated collection schedule documented</li>
+            </ul>
+
+            <h4>Issues, Backlog &amp; Operations</h4>
+            <ul class="checklist">
+                <li>Known issues documented</li>
+                <li>Backlog with acceptance criteria and effort estimates</li>
+                <li>Top 5 next steps prioritized</li>
+                <li>All automated jobs confirmed running</li>
+                <li>Login required</li>
+                <li>Usage log recording every action</li>
+                <li>Estimated monthly cost documented</li>
+            </ul>
+
+            <h3>Risk Register</h3>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Risk</th>
+                            <th>Severity</th>
+                            <th>Mitigation</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Interns take longer to ramp</td>
+                            <td><span class="sev-high">High</span></td>
+                            <td>Learning phase built in; first build milestone can flex</td>
+                        </tr>
+                        <tr>
+                            <td>Blockchain data sources hit rate limits</td>
+                            <td><span class="sev-high">High</span></td>
+                            <td>Save all data locally; use saved data for testing; never rely on live sources during demos</td>
+                        </tr>
+                        <tr>
+                            <td>Mixer analysis produces too many false positives</td>
+                            <td><span class="sev-high">High</span></td>
+                            <td>Calibrate against known public cases; set minimum confidence threshold</td>
+                        </tr>
+                        <tr>
+                            <td>Cross-chain transfer points change</td>
+                            <td><span class="sev-medium">Medium</span></td>
+                            <td>Keep list in easy-to-update config file; check monthly</td>
+                        </tr>
+                        <tr>
+                            <td>Nation-state flagging creates legal sensitivity</td>
+                            <td><span class="sev-medium">Medium</span></td>
+                            <td>Every score labeled probabilistic; disclaimer on exports; analyst review required</td>
+                        </tr>
+                        <tr>
+                            <td>Data provider changes pricing</td>
+                            <td><span class="sev-low">Low</span></td>
+                            <td>Identify backup provider for each network before Week 4</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3>Cut Order if Behind Schedule</h3>
+            <ol class="cut-list">
+                <li>Cut first: Nation-State Pattern Flagging</li>
+                <li>Cut second: Advanced graph visualization — keep basic table view</li>
+                <li>Cut third: Tron and Solana — deliver Bitcoin and Ethereum first</li>
+                <li class="never-cut">Never cut: Blockchain data collection</li>
+                <li class="never-cut">Never cut: Mixer analysis</li>
+                <li class="never-cut">Never cut: Cross-chain tracing</li>
+            </ol>
+
+            <h3>Out of Scope</h3>
+            <ul>
+                <li>Custom ML model trained from scratch</li>
+                <li>Real-time live blockchain monitoring</li>
+                <li>Full identity resolution</li>
+                <li>Automated legal reporting or court submissions</li>
+            </ul>
+        </section>
+
+        <footer>
+            <strong>Haven256</strong> · Project #1 · Summer 2026 · Confidential
+        </footer>
+    </div>
+</body>
+</html>
